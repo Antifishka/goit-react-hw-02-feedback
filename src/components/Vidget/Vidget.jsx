@@ -1,5 +1,7 @@
 import React from "react";
-import { Controls } from "./Controls/Controls";
+import { Section } from "./Section/Section";
+import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions";
+import { Value } from "./Value/Value";
 import { BoxVidget } from "./Vidget.slyled";
 
 class Vidget extends React.Component {
@@ -40,30 +42,35 @@ class Vidget extends React.Component {
         }));
     }
 
+    countTotalFeedback = () => {
+        return this.state.good + this.state.neutral + this.state.bad;
+    }
+
+    countPositiveFeedbackPercentage = () => {
+        const positiveFeedbackPercentage = (this.state.good*100) / (this.state.good + this.state.neutral + this.state.bad);
+        return Math.round(positiveFeedbackPercentage);
+    }
+
     render() {
         return (
             <BoxVidget>
-                <h2>Please leave feedback</h2>
+                <Section title="Please leave feedback">
+                    <FeedbackOptions
+                        onGoodFeedback={this.handlerGoodFeedback}
+                        onNeutralFeedback={this.handlerNeutralFeedback}
+                        onBadFeedback={this.handlerBadFeedback}
+                    />
+                </Section>    
 
-                <Controls
-                    onGoodFeedback={this.handlerGoodFeedback}
-                    onNeutralFeedback={this.handlerNeutralFeedback}
-                    onBadFeedback={this.handlerBadFeedback}
+                <Section title="Statistics">
+                    <Value
+                    valueGood={this.state.good}
+                    valueNeutral={this.state.neutral}
+                    valueBad={this.state.bad}
+                    valueTotal={this.countTotalFeedback()}
+                    valuePositive={this.countPositiveFeedbackPercentage()}
                 />
-
-                <h3>Statistics</h3>
-
-                <ul>
-                    <li>
-                        <p>Good: {this.state.good}</p>
-                    </li>
-                    <li>
-                        <p>Neutral: {this.state.neutral}</p>
-                    </li>
-                    <li>
-                        <p>Bad: {this.state.bad}</p>
-                    </li>
-                </ul>
+                </Section>
             </BoxVidget>
         );
     }
