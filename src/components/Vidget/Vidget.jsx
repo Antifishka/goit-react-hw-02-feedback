@@ -1,4 +1,5 @@
 import React from "react";
+import { Controls } from "./Controls/Controls";
 import { BoxVidget } from "./Vidget.slyled";
 
 class Vidget extends React.Component {
@@ -44,20 +45,11 @@ class Vidget extends React.Component {
             <BoxVidget>
                 <h2>Please leave feedback</h2>
 
-                <ul>
-                    <li><button type="button"
-                        onClick={this.handlerGoodFeedback}
-                    >Good</button>
-                    </li>
-                    <li><button type="button"
-                    onClick={this.handlerNeutralFeedback}
-                    >Neutral</button>
-                    </li>
-                    <li><button type="button"
-                    onClick={this.handlerBadFeedback}
-                    >Bad</button>
-                    </li>
-                </ul>
+                <Controls
+                    onGoodFeedback={this.handlerGoodFeedback}
+                    onNeutralFeedback={this.handlerNeutralFeedback}
+                    onBadFeedback={this.handlerBadFeedback}
+                />
 
                 <h3>Statistics</h3>
 
