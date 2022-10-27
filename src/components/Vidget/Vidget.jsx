@@ -1,6 +1,7 @@
 import React from "react";
 import { Section } from "./Section/Section";
 import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions";
+import { Notification } from "./Notification/Notification";
 import { Value } from "./Value/Value";
 import { BoxVidget } from "./Vidget.slyled";
 
@@ -21,24 +22,10 @@ class Vidget extends React.Component {
         bad: this.props.initialBad,
     }
 
-    handlerGoodFeedback = () => {
-        console.log('Клик Good')
-        this.setState(prevState => ({
-            good: prevState.good + 1,
-        }));
-    }
-
-    handlerNeutralFeedback = () => {
-        console.log('Клик Neutral') 
-        this.setState(prevState => ({
-            neutral: prevState.neutral + 1,
-        }));
-    }
-
-    handlerBadFeedback = () => {
-        console.log('Клик Bad') 
-        this.setState(prevState => ({
-            bad: prevState.bad + 1,
+    onLeaveFeedback = (evt) => {
+        console.log(evt.target.name);
+        this.setState((prevState) => ({
+            [evt.target.name]: prevState[evt.target.name] + 1,
         }));
     }
 
@@ -52,24 +39,27 @@ class Vidget extends React.Component {
     }
 
     render() {
+        const { feedback } = this.state;
+
         return (
             <BoxVidget>
                 <Section title="Please leave feedback">
                     <FeedbackOptions
-                        onGoodFeedback={this.handlerGoodFeedback}
-                        onNeutralFeedback={this.handlerNeutralFeedback}
-                        onBadFeedback={this.handlerBadFeedback}
+                        options={Object.keys(this.state)}
+                        onLeaveFeedback={this.onLeaveFeedback}
                     />
                 </Section>    
 
                 <Section title="Statistics">
-                    <Value
-                    valueGood={this.state.good}
-                    valueNeutral={this.state.neutral}
-                    valueBad={this.state.bad}
-                    valueTotal={this.countTotalFeedback()}
-                    valuePositive={this.countPositiveFeedbackPercentage()}
-                />
+                    {!feedback
+                        ? <Notification message="There is no feedback" />
+                        : <Value
+                            valueGood={this.state.good}
+                            valueNeutral={this.state.neutral}
+                            valueBad={this.state.bad}
+                            valueTotal={this.countTotalFeedback()}
+                            valuePositive={this.countPositiveFeedbackPercentage()}
+                        />}                   
                 </Section>
             </BoxVidget>
         );
