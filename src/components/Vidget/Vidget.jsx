@@ -34,13 +34,11 @@ class Vidget extends React.Component {
     }
 
     countPositiveFeedbackPercentage = () => {
-        const positiveFeedbackPercentage = (this.state.good*100) / (this.state.good + this.state.neutral + this.state.bad);
-        return Math.round(positiveFeedbackPercentage);
+        const { good } = this.state;
+        return Math.round((good*100) / this.countTotalFeedback());
     }
 
     render() {
-        const { feedback } = this.state;
-
         return (
             <BoxVidget>
                 <Section title="Please leave feedback">
@@ -51,7 +49,7 @@ class Vidget extends React.Component {
                 </Section>    
 
                 <Section title="Statistics">
-                    {!feedback
+                    {this.countTotalFeedback() === 0
                         ? <Notification message="There is no feedback" />
                         : <Value
                             valueGood={this.state.good}
