@@ -24,5 +24,5 @@ export const OptionsBtn = styled.button`
 
     &:active{
         box-shadow: 2px 5px 2px 0 rgb(0 0 0 / 0.5);
-    }
+    };
 `;

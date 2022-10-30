@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-export const Value = ({valueGood, valueNeutral, valueBad, valueTotal, valuePositive = 0}) => (
+export const Value = ({valueGood, valueNeutral, valueBad, valueTotal, valuePositive = "0"}) => (
     <ul>
         <li>
             <p>Good: {valueGood}</p>
