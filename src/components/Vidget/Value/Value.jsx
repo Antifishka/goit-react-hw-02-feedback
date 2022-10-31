@@ -16,7 +16,7 @@ export const Value = ({valueGood, valueNeutral, valueBad, valueTotal, valuePosit
             <p>Total: {valueTotal}</p>
         </li>
         <li>
-            <p>Positive feedback: {valuePositive}%</p>
+            <p>Positive feedback: {valuePositive || 0}%</p>
         </li>
     </ul>
 );
